@@ -1,0 +1,45 @@
+# Map individual collection code to user-presentable location.
+#
+# There are a LOT of Horizon collection codes, we can't map em
+# all, hard to maintain -- but used for certain special cases. 
+
+# We had to do it for MSEL Special Collections location. Recommend
+# NOT using this for anything else if you can avoid it.
+
+# NOTE: Keys should be all lowercase, and calling procedure
+# should normalize to lowercase before using this map. Horizon
+# likes to be case-insensitive sometimes, need to normalize to all lowercase
+# to ensure correct match.
+
+ecageki: MSEL Special Collections
+egtrade: MSEL Special Collections
+ehinkbl: MSEL Special Collections
+ehinkes: MSEL Special Collections
+eoclabl: MSEL Special Collections
+eoclass: MSEL Special Collections
+eofarrf: MSEL Special Collections
+eofart:  MSEL Special Collections
+eofms:   MSEL Special Collections
+eofspbi: MSEL Special Collections
+eofspbl: MSEL Special Collections
+eofspec: MSEL Special Collections
+eofsptb: MSEL Special Collections
+eofsptu: MSEL Special Collections
+esacq:   MSEL Special Collections
+esarc:   MSEL Special Collections
+esarck:  MSEL Special Collections
+esarcrf: MSEL Special Collections
+esbirny: MSEL Special Collections
+escagbl: MSEL Special Collections
+escage:  MSEL Special Collections
+escaggi: MSEL Special Collections
+esgpfo:  MSEL Special Collections
+esgpfom: MSEL Special Collections
+eshtlr:  MSEL Special Collections
+esmanu:  MSEL Special Collections
+esmchn:  MSEL Special Collections
+esmchnr: MSEL Special Collections
+esref:   MSEL Special Collections
+estudbl: MSEL Special Collections
+estudor: MSEL Special Collections
+sdis:    MSEL Special Collections

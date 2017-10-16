@@ -1,0 +1,89 @@
+#JHU location's in human readable format
+
+# Some location codes have an array as a value, with more
+# than one Catalyst location to map to, when we want
+# to map to a higher level location like we used to do
+# with "Medical Libraries" but don't actually anymore. Mostly
+# we don't do this anymore, but the feature remains. 
+
+# Map to empty string if you explictitly don't want a location
+# code to post to a facet value. Otherwise, unmapped location
+# codes will show up as raw keys in Catalyst interface, this is
+# intentional so we notice new ones we have to map. 
+
+__default__:  __passthrough__
+
+afl:          Arthur Friedheim Library
+
+# Peabody - Ensembles Library , Ursula says these holdings
+# are actually being removed from the catalog, and should not
+# show up as a seperate limit.
+aflens:       Arthur Friedheim Library
+ares  :       Arthur Friedheim Library # AFL Reserves
+eav:          MSE Library  # MSEL A/V decided to bundle together
+
+# ecsa is probably no longer used, elscsp instead
+ecsa  :
+  - MSEL Special Collections
+  - MSE Library
+espblc:
+  - MSEL Special Collections
+  - MSE Library
+# elscsp used to get cross-posted to Libraries Service Center, but no
+# LSC facet anymore. 
+elscsp:       MSEL Special Collections
+edtc  :       Harbor East
+egar  :       Garrett Library
+# formerly egov additionally "MSEL Gov Pubs/Maps/Law", but we don't do that anymore
+egov  :       MSE Library
+# elsc, Libraries Service Center
+# emp, Moravia Park Service Center. 
+# We no longer have an LSC facet, don't post these to any location facet. 
+elsc  :       ''
+emp   :       ''
+emccl :       Montgomery Library Resource Center
+emcrsv:       Montgomery Library Resource Center
+emsel :       MSE Library
+#actually JHU Homewood Office (faculty and grad students):
+eoffice:      MSE Library
+epbdy :       George Peabody Library
+eres:         MSE Library  # MSEL Reserves, bundled into MSEL 
+# evilla=Villa Spelman, don't post to location facet
+evilla:       ''
+
+# actually Washington Center/SPS and Public Health:
+ewash :       Washington Library Resource Center
+ewashas:      Washington Library Resource Center
+ewcrsv:       Washington Library Resource Center
+# general is unused, hide. 
+general:      ''
+# gibres, APL JHU-EP Students - Ed Center, don't map to any facet per request
+gibres:       ''
+gibson:       APL STAFF - Room 5-17
+ssais :       SAIS Library
+
+# Actually SAIS Reserves, but SAIS wants it folded together for now
+sssres:       SAIS Library
+# unk=Unknown, dont' post to any location facet. 
+unk   :       ''
+warchiv:      Medical Archives
+wharr :       Harrison Medical Library-Bayview
+winst:        Institute of the History of Medicine
+winstrv:      Institute of the History of Medicine  # Reserves, bundle together
+wirc:         Welch Medical Library
+wlil:         Welch Medical Library
+wlilrv:       Welch Medical Library
+wlilw:        Welch Medical Library
+wlilwrv:      Welch Medical Library
+wmeyer:       Welch Medical Library
+wnirc :       Welch Medical Library
+wwelch:       Welch Medical Library
+wwilmer:      Wilmer Friedenwald Library
+# woffice: JH Medical Campus Office (faculty and staff)
+woffice:      Welch Medical Library
+
+# New ones discovered 21 March 2012
+ehwhous:      Homewood Museum
+
+#wpick1 JHMI Pickup - Armstrong 306, intentionally map to empty string for no facet
+wpick1:       ''
