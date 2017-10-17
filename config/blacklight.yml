@@ -1,0 +1,13 @@
+defaults: &default
+  adapter: solr
+  url: <%= ENV['SOLR_URL']  %>
+development:
+  <<: *default
+demo:
+  <<: *default
+test:
+  <<: *default
+
+production:
+  adapter: solr
+  replicate_master_url: <%= ENV['SOLR_REPLICATE_MASTER_URL'] %>

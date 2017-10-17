@@ -1,10 +1,10 @@
 require 'yaml'
+require 'erb'
 require 'net/http'
 require 'uri'
 
 # Some helpers for rake tasks, for finding
-# solr connection details from the Catalyst master ./config/solr.config,
-# and for connecting to Solr via HTTP
+# connecting to Solr via HTTP
 module SolrConnectHelper
   # Stupid sub-class of Net::HTTP to get rid of the timeout. 
   class NoTimeoutHTTP < Net::HTTP
@@ -35,15 +35,14 @@ module SolrConnectHelper
     return response
   end
 
-  # Root path for Catalyst rails app, that traject is a subdir of
+  # Root path for  app, that traject 
   # -- used for looking up config files, placing lock files, etc. 
-  def rails_root
-    File.expand_path("../../../../", __FILE__)
+  def app_root
+    File.expand_path("../../../", __FILE__)
   end
 
   def solr_yml_path
-    # Catalyst root ./config/blacklight.yml
-    File.join(rails_root, "config", "blacklight.yml")
+    File.join(app_root, "config", "blacklight.yml")
   end
 
   def rails_env
@@ -51,12 +50,12 @@ module SolrConnectHelper
   end
 
   def solr_url(env = rails_env)    
-    solr_config = YAML::load(File.open(solr_yml_path))
+    solr_config = YAML.load(ERB.new(File.read(solr_yml_path)).result)
     solr_config[env]["url"]
   end
 
   def replicate_master_url(env = rails_env)    
-    solr_config = YAML::load(File.open(solr_yml_path))
+    solr_config = YAML.load(ERB.new(File.read(solr_yml_path)).result) 
     solr_config[env]["replicate_master_url"]
   end
 

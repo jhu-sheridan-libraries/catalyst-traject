@@ -6,9 +6,17 @@
 
 require 'traject_horizon'
 
-horizon_yml_path = File.expand_path("../../../config/horizon.yml", __FILE__)
-all_config       = YAML::load(File.open(horizon_yml_path))
+horizon_yml_path = File.expand_path("../../config/horizon.yml", __FILE__)
+all_config       = YAML.load(ERB.new(File.read(horizon_yml_path)).result)
 conf             = all_config[  ENV['FROM_ENV'] || ENV['RAILS_ENV'] || "development"   ]
+
+# development:
+#   host: horizonbu.mse.jhu.edu
+#   port: 2025
+#   db_name: horizon_test
+#   login: esys
+#   password: ****
+#   jtds_type: sybase
 
 settings do
   store "reader_class_name", "Traject::HorizonReader"

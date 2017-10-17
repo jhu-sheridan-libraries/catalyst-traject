@@ -1,6 +1,8 @@
 # Gemfile just for our uses of the traject indexer
 source "https://rubygems.org"
 
+gem "dotenv"
+
 # Add rake so when we execute bundle exec rake in context of this
 # gem file, it'll work. 
 gem "rake"

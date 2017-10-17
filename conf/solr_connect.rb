@@ -2,8 +2,8 @@
 # which Solr to connect to. Set ENV["RAILS_ENV"]
 # to choose environment. 
 
-solr_yml_path = File.expand_path("../../../config/blacklight.yml", __FILE__)
-solr_config   = YAML::load(File.open(solr_yml_path))
+solr_yml_path = File.expand_path("../../config/blacklight.yml", __FILE__)
+solr_config   = YAML.load(ERB.new(File.read(solr_yml_path)).result)
 
 env_name      = ENV["RAILS_ENV"] || "development"
 this_env      = solr_config[ env_name ]
@@ -39,5 +39,5 @@ self.logger.adapter :stdout, :level => "info"
 #
 # capistrano's multi-directory setup is confusing the symlink option, need
 # to disable symlink for datefile log. 
-log_file = File.expand_path("../../../log/traject-#{env_name}.log", __FILE__)
+log_file = File.expand_path("../../log/traject-#{env_name}.log", __FILE__)
 logger.adapter :datefile, log_file, :date_pattern => "%Y-week-%V", :keep => 2, :symlink => false
