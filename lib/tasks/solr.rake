@@ -32,7 +32,7 @@ namespace :solr do
   desc "Replicate in current environment from :replicate_master_url"
   task :replicate do
     unless SolrConnectHelper.replicate_master_url
-      puts "No replicate_master_url found in #{File.join(SolrConnectHelper.rails_root, "config", "blacklight.yml")} / #{SolrConnectHelper.rails_env}"
+      puts "No replicate_master_url found in #{File.join("../config", "blacklight.yml")} / #{SolrConnectHelper.rails_env}"
       exit(1)
     end
     SolrConnectHelper.get_and_print(SolrConnectHelper.solr_url + "/replication?masterUrl=#{CGI.escape(SolrConnectHelper.replicate_master_url + "/replication")}&command=fetchIndex")

@@ -2,15 +2,17 @@ require 'net/http'
 require 'cgi'
 require "rexml/document"
 require "time"
+require 'dotenv'
+Dotenv.load
+require 'dotenv/tasks'
 
 require_relative "solr_connect_helper"
 
 namespace :horizon do
 
-  
 
   desc "Export from Horizon to file"
-  task :export do      
+  task export: :dotenv do      
     command_line = traject_command_line(:mode => "marcout", :output_file => ENV['OUTPUT'])
     puts "Executing:\n#{command_line}"
     puts
@@ -44,7 +46,7 @@ namespace :horizon do
 
   
   desc "Mass index from Horizon, with replication"
-  task "mass_index" do  
+  task mass_index: :dotenv do  
     solr_master = SolrConnectHelper.replicate_master_url
 
     if solr_master.nil? 
@@ -75,7 +77,7 @@ namespace :horizon do
     # important we keep lockfile in tmp/pids, a directory that capistrano
     # keeps in shared -- if it's just in a capistrano single app releases
     # directory, it won't be noticed for collisions! 
-    lockfile = File.join(SolrConnectHelper.rails_root, "tmp", "pids", "horizon_mass_index.pid")
+    lockfile = File.join(SolrConnectHelper.app_root, "tmp", "pids", "horizon_mass_index.pid")
     if File.exist?(lockfile)
       puts "Lock file exists, is another process running? Manually delete if you know what you're doing: #{lockfile}"
       exit 1

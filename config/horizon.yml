@@ -1,0 +1,23 @@
+defaults: &default
+  host: <%= ENV['HORIZON_DB_HOST'] %>
+  port: <%= ENV['HORIZON_DB_PORT'] || '2025' %>
+  db_name: <%= ENV['HORIZON_DB_NAME'] %>
+  login: <%= ENV['HORIZON_LOGIN'] %>
+  password: <%= ENV['HORIZON_PASSWORD'] %>
+  jdbcType: jTDS-Sybase
+
+development:
+  <<: *default
+
+demo:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
+

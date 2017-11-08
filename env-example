@@ -1,0 +1,18 @@
+# ENV names may differ from catalyst
+
+# used in config/horizon.yml
+HORIZON_DB_HOST=
+HORIZON_DB_NAME=
+HORIZON_LOGIN=
+HORIZON_PASSWORD=
+
+# used in config/blacklight.yml
+SOLR_URL=
+SOLR_REPLICATE_MASTER_URL=
+
+# used in config/database.yml
+MYSQL_DATABASE=
+MYSQL_SERVER=
+MYSQL_USER=
+MYSQL_PASSWORD
+MYSQL_PORT=

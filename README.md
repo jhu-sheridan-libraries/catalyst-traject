@@ -6,6 +6,10 @@ This project provides indexing for catalyst
 
 Initially this project was part of the blacklight_rails project
 
+Run as a cron 
+```
+ RAILS_ENV=production bundle exec rake horizon:mass_index
+```
 
 These are configuration and setup files to be used with the
 [traject](http://github.com/jrochkind/traject) tool for
