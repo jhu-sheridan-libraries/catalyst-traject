@@ -2,9 +2,11 @@
 
 # Reads horizon connection details from containing Rails apps config/horizon.yml
 # Set ENV["RAILS_ENV"] to determine rails environment key used for horizon
-# connect detail defaults -- can still be overridden on command line. 
+# connect detail defaults -- can still be overridden on command line.
 
 require 'traject_horizon'
+require 'dotenv'
+Dotenv.load
 
 horizon_yml_path = File.expand_path("../../config/horizon.yml", __FILE__)
 all_config       = YAML.load(ERB.new(File.read(horizon_yml_path)).result)

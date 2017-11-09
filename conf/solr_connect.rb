@@ -1,6 +1,9 @@
+require 'dotenv'
+Dotenv.load
+
 # Load from Rails project config/blacklight.yml to determine
 # which Solr to connect to. Set ENV["RAILS_ENV"]
-# to choose environment. 
+# to choose environment.
 
 solr_yml_path = File.expand_path("../../config/blacklight.yml", __FILE__)
 solr_config   = YAML.load(ERB.new(File.read(solr_yml_path)).result)
