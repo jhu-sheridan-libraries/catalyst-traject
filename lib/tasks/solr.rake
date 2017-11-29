@@ -1,20 +1,22 @@
 require 'fileutils'
 require 'net/http'
 require 'cgi'
+require 'dotenv'
+Dotenv.load
+require 'dotenv/tasks'
 
 require_relative "solr_connect_helper"
-
 
 
 namespace :solr do
 
   desc "Run optimize on current Solr"
-  task :optimize do
+  task optimize: :dotenv do
     SolrConnectHelper.get_and_print( SolrConnectHelper.solr_url + "/update?stream.body=%3Coptimize/%3E" )    
   end
 
   desc "Delete ALL records and commit in current Solr"
-  task :delete_all do
+  task delete_all: :dotenv do
     if SolrConnectHelper.rails_env == "production"
       puts "Delete_all in PRODUCTION, you sure? (y|n) [n]"
       confirmation = STDIN.gets.chomp.downcase
@@ -30,7 +32,7 @@ namespace :solr do
   end
 
   desc "Replicate in current environment from :replicate_master_url"
-  task :replicate do
+  task replicate: :dotenv do
     unless SolrConnectHelper.replicate_master_url
       puts "No replicate_master_url found in #{File.join("../config", "blacklight.yml")} / #{SolrConnectHelper.rails_env}"
       exit(1)

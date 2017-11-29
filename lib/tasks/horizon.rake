@@ -28,7 +28,7 @@ namespace :horizon do
   end  
 
   desc "exporter directly from horizon, map to Solr"
-  task :export_to_index do
+  task export_to_index: :dotenv do
     command_line = traject_command_line(:mode => :solr)
 
     puts "Executing:\n#{command_line}"
