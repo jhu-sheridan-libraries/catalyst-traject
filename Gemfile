@@ -10,7 +10,7 @@ gem 'ruby-debug'
 gem "traject", "~> 2.0" #:github => "traject-project/traject"
 
 gem "traject_horizon", "~> 1.2", ">= 1.2.4"
-
+gem "httpclient", ">= 2.8.2"
 # for experimental umich format classification
 gem "traject_umich_format"
 

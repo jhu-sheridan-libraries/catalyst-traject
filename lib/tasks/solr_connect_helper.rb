@@ -2,6 +2,8 @@ require 'yaml'
 require 'erb'
 require 'net/http'
 require 'uri'
+require 'dotenv'
+Dotenv.load
 
 # Some helpers for rake tasks, for finding
 # connecting to Solr via HTTP
