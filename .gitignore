@@ -11,8 +11,11 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
+/tmp/pids/*
 !/log/.keep
 !/tmp/.keep
+!/tmp/pids/
+!/tmp/pids/.keep
 
 # ignore local gems
 /.gem
@@ -28,7 +31,7 @@
 /.env.*
 
 log/*.log
-tmp/
+#tmp/
 
 .ruby-version
 .ruby-gemset
