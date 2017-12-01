@@ -7,8 +7,13 @@ HORIZON_LOGIN=
 HORIZON_PASSWORD=
 
 # used in config/blacklight.yml
-SOLR_URL=
+# NOTE: this is an either/or
+# if both are provided, the replicate url will be used.
+# in order to index to a single solr using SOLR_URL,
+# MASS_INDEX_SINGLE_SOLR must be set to 1
 SOLR_REPLICATE_MASTER_URL=
+SOLR_URL=
+MASS_INDEX_SINGLE_SOLR=0
 
 # used in config/database.yml
 MYSQL_DATABASE=
