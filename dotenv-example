@@ -3,8 +3,8 @@
 # used in config/horizon.yml
 HORIZON_DB_HOST=
 HORIZON_DB_NAME=
-HORIZON_LOGIN=
-HORIZON_PASSWORD=
+HORIZON_DB_PASSWORD=
+HORIZON_DB_USERNAME=
 
 # used in config/blacklight.yml
 # NOTE: this is an either/or
@@ -17,7 +17,7 @@ MASS_INDEX_SINGLE_SOLR=0
 
 # used in config/database.yml
 MYSQL_DATABASE=
-MYSQL_SERVER=
-MYSQL_USER=
+MYSQL_HOST=
 MYSQL_PASSWORD
 MYSQL_PORT=
+MYSQL_USER=

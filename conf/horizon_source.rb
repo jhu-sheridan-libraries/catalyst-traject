@@ -15,8 +15,8 @@ conf             = all_config[  ENV['FROM_ENV'] || ENV['RAILS_ENV'] || "developm
 # development:
 #   host: horizonbu.mse.jhu.edu
 #   port: 2025
-#   db_name: horizon_test
-#   login: esys
+#   database: horizon_test
+#   username: esys
 #   password: ****
 #   jtds_type: sybase
 
@@ -28,8 +28,8 @@ settings do
   provide "horizon.jtds_type",  conf['jtds_type']
   provide "horizon.host",       conf['host']
   provide "horizon.port",       conf['port']
-  provide "horizon.database",   conf['db_name']
-  provide "horizon.user",       conf['login']
+  provide "horizon.database",   conf['database']
+  provide "horizon.user",       conf['username']
 
   provide "horizon.password",   conf['password']
 
