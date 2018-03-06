@@ -7,7 +7,7 @@ gem "dotenv"
 # gem file, it'll work. 
 gem "rake"
 gem 'ruby-debug'
-gem "traject", "~> 2.0" #:github => "traject-project/traject"
+gem "traject", "~> 2.3" #:github => "traject-project/traject"
 gem "traject_horizon", "~> 1.2", ">= 1.2.4"
 
 # for experimental umich format classification
