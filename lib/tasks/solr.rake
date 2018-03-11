@@ -37,7 +37,7 @@ namespace :solr do
       puts "No replicate_master_url found in #{File.join("../config", "blacklight.yml")} / #{SolrConnectHelper.rails_env}"
       exit(1)
     end
-    SolrConnectHelper.get_and_print(SolrConnectHelper.solr_url + "/replication?masterUrl=#{CGI.escape(SolrConnectHelper.replicate_master_url + "/replication")}&command=fetchIndex")
+    SolrConnectHelper.get_and_print(SolrConnectHelper.solr_url + "/replication?masterUrl=#{CGI.escape(SolrConnectHelper.replicate_master_url)}&command=fetchIndex")
   end
 
 end
