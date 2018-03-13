@@ -83,10 +83,10 @@ namespace :horizon do
       exit 1
     end    
     start_time = Time.now
-    
+  
     puts "Registered start time: #{start_time}  (#{start_time.utc.iso8601})"
-    
-    
+  
+  
     File.open(lockfile, "w") do |f|
       f.write( {'pid' => Process.pid, 'start_time' => start_time}.to_yaml )
     end
@@ -98,29 +98,29 @@ namespace :horizon do
         puts "Lock file still existed at exit, exit abnormal? Removed #{lockfile}"
       end
     end
-    
-    # Mass index to replication master 
+  
+    # Delete all docs before we start
+    puts
+    puts "Deleting ALL documents before indexing start"
+    delete_query = "<delete><query>*:*</query></delete>"
+    SolrConnectHelper.get_and_print( "#{mass_index_solr_url}/update?stream.body=#{CGI.escape(delete_query)}" )
+    SolrConnectHelper.get_and_print( mass_index_solr_url + "/update?stream.body=%3Ccommit/%3E" )
+    puts "Done deleting ALL documents before indexing starts #{Time.now}"
+
+   # Mass index to replication master 
     puts
     puts "Running horizon:export_to_index to #{mass_index_solr_url}"    
     Rake::Task["horizon:export_to_index"].invoke    
     puts "Done importing all horizon to master #{Time.now}"
-    
-    # Now delete any records OLDER than when we started from
-    # source=horizon, cause if the record wasn't replaced with a newer
-    # one, that means it's been deleted from horizon.
-    puts
-    puts "Deleting old records prior to our current import"
-    dq = "<delete><query>source:horizon AND timestamp:[* TO #{start_time.utc.iso8601}]</query></delete>"
-    SolrConnectHelper.get_and_print("#{mass_index_solr_url}/update?stream.body=#{CGI.escape(dq)}"  )
-    SolrConnectHelper.get_and_print(mass_index_solr_url + "/update?stream.body=%3Ccommit/%3E")
-    puts "Done deleting old records at #{Time.now}"
-    
 
     # And optimize the master guy please
     SolrConnectHelper.get_and_print( mass_index_solr_url + "/update?stream.body=%3Coptimize/%3E" )
     puts "Done optimizing #{mass_index_solr_url} at #{Time.now}"
-    
-    
+  
+    # Optimize after indexing, forces solr relinquish disk space
+    SolrConnectHelper.get_and_print( mass_index_solr_url + "/update?stream.body=%3Coptimize/%3E" )
+    puts "Done optimizing #{mass_index_solr_url} at #{Time.now}"
+  
     # Sanity check, if master doens't have at least ENV["SANITY_CHECK_COUNT"]
     # records, abort abort abort! (default two million)
     if solr_master.nil?    
@@ -139,17 +139,16 @@ namespace :horizon do
         exit(1)
       end    
 
-
       # And replicate it to slave!
       puts
       puts "Replicating master to slave"
       Rake::Task["solr:replicate"].invoke
       puts "Done sending replicate command at #{Time.now}. (Replication itself may still be ongoing)"
     end
-    
+  
     # Delete lockfile, and we're done
     File.delete(lockfile)
-    
+  
     puts "Done at #{Time.now}"
   end    
 end
@@ -206,7 +205,6 @@ def traject_command_line(args = {})
   str << " -s horizon.first_bib=#{ENV['FIRST']} " if ENV['FIRST']
   str << " -s horizon.last_bib=#{ENV['LAST']} "   if ENV['LAST']
   
-  
   return str
 end
 
@@ -228,8 +226,3 @@ def auto_marcout_filename
 
   name << "-#{now_timestamp}.marc"
 end
-
-
-
-
-
