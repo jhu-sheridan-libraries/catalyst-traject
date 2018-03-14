@@ -113,10 +113,6 @@ namespace :horizon do
     Rake::Task["horizon:export_to_index"].invoke    
     puts "Done importing all horizon to master #{Time.now}"
 
-    # And optimize the master guy please
-    SolrConnectHelper.get_and_print( mass_index_solr_url + "/update?stream.body=%3Coptimize/%3E" )
-    puts "Done optimizing #{mass_index_solr_url} at #{Time.now}"
-  
     # Optimize after indexing, forces solr relinquish disk space
     SolrConnectHelper.get_and_print( mass_index_solr_url + "/update?stream.body=%3Coptimize/%3E" )
     puts "Done optimizing #{mass_index_solr_url} at #{Time.now}"
