@@ -1,25 +1,23 @@
-# Gemfile just for our uses of the traject indexer
 source "https://rubygems.org"
 
-gem "dotenv"
+# use a .env file for environment variables
+gem "dotenv", "~> 2.2"
 
-# Add rake so when we execute bundle exec rake in context of this
-# gem file, it'll work. 
-gem "rake"
-gem 'ruby-debug'
-gem "traject", "~> 2.0" #:github => "traject-project/traject"
-gem "traject_horizon", "~> 1.2", ">= 1.2.4"
+gem "rake", "~> 12.3"
+gem 'ruby-debug', "~> 0.10"
+gem "traject", "~> 2.3"
+gem "traject_horizon", "~> 1.3"
 
 # for experimental umich format classification
-gem "traject_umich_format"
+gem "traject_umich_format", "~> 0.4"
+gem "traject-marc4j_reader", "~> 1.0"
 
-gem "lcsort" #, :path => "../../lcsort"
-gem "traject_sequel_writer" #, :path => "../../traject_sequel_writer" #:github => "traject/traject_sequel_writer"
-gem "jdbc-mysql"
-# traject dependencies which require updated for jruby1.9
+gem "lcsort", "~> 0.9"
+gem "traject_sequel_writer", "~> 0.12"
+gem "jdbc-mysql", "~> 5.1"
 
 # fixes warning: Object#timeout is deprecated, use Timeout.timeout instead
-gem "httpclient", "~>2.8", ">= 2.8.2"
+gem "httpclient", "~> 2.5"
 
 # fixes warning: `-' after local variable or literal is interpreted as binary operator
-gem "concurrent-ruby", "~>0.9", ">= 0.9.1"
+gem "concurrent-ruby", "~> 1.0"
