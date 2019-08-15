@@ -6,9 +6,25 @@ This project provides indexing for catalyst
 
 Initially this project was part of the blacklight_rails project
 
-Run as a cron 
+Prerequisites: 
+
+java8
+jruby-9.1
+
+## Getting Started
+
+To set it up locally, install the gems with bundler
+
 ```
- RAILS_ENV=production bundle exec rake horizon:mass_index
+bundle install --path /vendor/bundle
+```
+
+Create a `.env` file by filling in the variable values in `env-example`. For the values, please check lastpass or the servers
+
+## Run as a cron 
+
+```
+RAILS_ENV=production bundle exec rake horizon:mass_index
 ```
 
 These are configuration and setup files to be used with the
@@ -26,6 +42,8 @@ to traject to tell it to use that Gemfile.
 traject needs to run under jruby (at least for the configuration we're using),
 then for instance:
 
-    traject -G -c ./conf/horizon_source.rb -c ./conf/solr_connect.rb -c ./conf/horizon_index.rb
+```
+traject -G -c ./conf/horizon_source.rb -c ./conf/solr_connect.rb -c ./conf/horizon_index.rb
+```
 
 Or use rake tasks that we might write to control this process.
