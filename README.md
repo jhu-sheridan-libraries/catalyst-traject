@@ -27,6 +27,13 @@ Create a `.env` file by filling in the variable values in `env-example`. For the
 RAILS_ENV=production bundle exec rake horizon:mass_index
 ```
 
+## Manually run on Master Server
+
+```
+CD /opt/catalyst-traject
+RAILS_ENV=production bundle exec rake horizon:mass_index
+```
+
 These are configuration and setup files to be used with the
 [traject](http://github.com/jrochkind/traject) tool for
 indexing MARC to solr.
