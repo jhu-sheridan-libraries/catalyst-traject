@@ -231,6 +231,21 @@ to_field "issn_related",        extract_marc("490x:440x:800x:400x:410x:411x:810x
 
 to_field "oclcnum_t",           oclcnum
 
+# add hathi to traject
+to_field "hathi_url" do |record, accumulator|
+  tmap = Traject::TranslationMap.new('url')
+  bf = Format.new(record)
+  value = tmap[bf.code]
+  accumulator << value
+end
+
+to_field "hathi_access" do |record, accumulator|
+  tmap = Traject::TranslationMap.new('access')
+  bf = Format.new(record)
+  value = tmap[bf.code]
+  accumulator << value
+end
+
 to_field "other_number_unstem", extract_marc("024a:028a")
 
 to_field "location_facet" do |record, accumulator|
