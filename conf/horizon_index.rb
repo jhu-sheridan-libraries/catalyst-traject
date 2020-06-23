@@ -233,17 +233,11 @@ to_field "oclcnum_t",           oclcnum
 
 # add hathi to traject
 to_field "hathi_url" do |record, accumulator|
-  tmap = Traject::TranslationMap.new('url')
-  bf = Format.new(record)
-  value = tmap[bf.code]
-  accumulator << value
+  accumulator << record['url']
 end
 
 to_field "hathi_access" do |record, accumulator|
-  tmap = Traject::TranslationMap.new('access')
-  bf = Format.new(record)
-  value = tmap[bf.code]
-  accumulator << value
+  accumulator << record['access']
 end
 
 to_field "other_number_unstem", extract_marc("024a:028a")
