@@ -234,10 +234,12 @@ to_field "oclcnum_t",           oclcnum
 # add hathi to traject
 to_field "hathi_url" do |record, accumulator|
   accumulator << record['url']
+  accumulator.uniq!
 end
 
 to_field "hathi_access" do |record, accumulator|
   accumulator << record['access']
+  accumulator.uniq!
 end
 
 to_field "other_number_unstem", extract_marc("024a:028a")
