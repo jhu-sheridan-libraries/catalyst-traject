@@ -4,6 +4,8 @@ extend  Traject::Macros::Marc21Semantics
 require 'traject/macros/marc_format_classifier'
 extend Traject::Macros::MarcFormats
 
+extend HathiMacro
+
 # add our ../lib to LOAD_PATH, including ../lib/translation_maps
 $LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '../lib'))
 
@@ -231,16 +233,10 @@ to_field "issn_related",        extract_marc("490x:440x:800x:400x:410x:411x:810x
 
 to_field "oclcnum_t",           oclcnum
 
-# add hathi to traject
-to_field "hathi_url" do |record, accumulator|
-  accumulator << record['url']
-  accumulator.uniq!
-end
-
-to_field "hathi_access" do |record, accumulator|
-  accumulator << record['access']
-  accumulator.uniq!
-end
+# Add Hathi access status dnd URL directly to Solr record
+# - lookup by bib id and OCLC number
+to_field 'hathi_access', hathi_access
+to_field 'hathi_url', hathi_url
 
 to_field "other_number_unstem", extract_marc("024a:028a")
 
