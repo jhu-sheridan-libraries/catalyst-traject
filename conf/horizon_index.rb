@@ -4,10 +4,13 @@ extend  Traject::Macros::Marc21Semantics
 require 'traject/macros/marc_format_classifier'
 extend Traject::Macros::MarcFormats
 
-extend HathiMacro
-
 # add our ../lib to LOAD_PATH, including ../lib/translation_maps
+$LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '../lib/hathi_macro.rb'))
 $LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '../lib'))
+
+# Local code to lookup Hathi access status
+require 'hathi_macro.rb'
+extend HathiMacro
 
 settings do
   # 3 cpu's on catsolrmaster, normally would default to 2 procesing threads,
