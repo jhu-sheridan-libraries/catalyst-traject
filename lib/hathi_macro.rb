@@ -28,13 +28,13 @@ module HathiMacro
     end
   end
   def open_connection!
-    logger.debug("HorizonReader: Opening JDBC Connection at #{jdbc_url(false)} ...")
+    #logger.debug("HorizonReader: Opening JDBC Connection at #{jdbc_url(false)} ...")
 
     conn =  java.sql.DriverManager.getConnection( jdbc_url(true) )
     # If autocommit on, fetchSize later has no effect, and JDBC slurps
     # the whole result set into memory, which we can not handle.
     conn.setAutoCommit false
-    logger.debug("HorizonReader: Opened JDBC Connection.")
+    #logger.debug("HorizonReader: Opened JDBC Connection.")
     return conn
   end
 
@@ -79,7 +79,7 @@ module HathiMacro
       # If not found, return whatever else we got
       hathi_value = 'none'
       while (rs.next)
-        logger.info(rs.getString(type))
+        #logger.info(rs.getString(type))
         hathi_value = rs.getString(type)
       end
     ensure
