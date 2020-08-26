@@ -18,7 +18,7 @@ settings do
   # going on. 
   provide "processing_thread_pool", 3
   # open connection for hathi
-  @conn = open_connection!
+  hathi_initialize
 end
 
 
