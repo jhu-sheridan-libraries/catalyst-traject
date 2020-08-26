@@ -10,7 +10,7 @@ $LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '../lib'))
 
 # Local code to lookup Hathi access status
 require 'hathi_macro.rb'
-include HathiMacro
+extend HathiMacro
 
 settings do
   # 3 cpu's on catsolrmaster, normally would default to 2 procesing threads,
@@ -18,7 +18,7 @@ settings do
   # going on. 
   provide "processing_thread_pool", 3
   # open connection for hathi
-  hathi_initialize
+  HathiMacro.hathi_initialize
 end
 
 
