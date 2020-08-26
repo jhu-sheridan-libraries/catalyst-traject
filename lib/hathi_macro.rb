@@ -1,7 +1,11 @@
 module HathiMacro
   Marc21 = Traject::Macros::Marc21
   OCLC_CLEAN = /^\(OCoLC\)[^0-9A-Za-z]*([0-9A-Za-z]*)[^0-9A-Za-z]*$/
-  conn =  java.sql.DriverManager.getConnection( jdbc_url(true) )
+  conn = ""
+
+  def initialize
+    conn = open_connection!
+  end
 
   def hathi_access
     lambda do |record, accumulator, _context|
