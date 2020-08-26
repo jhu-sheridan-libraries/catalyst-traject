@@ -79,7 +79,7 @@ module HathiMacro
       end
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
-      stmt = @con.createStatement()
+      stmt = @conn.createStatement()
       rs = stmt.executeQuery(sql)
       # Search all returned records for highest level of access (allow)
       # If not found, return whatever else we got
