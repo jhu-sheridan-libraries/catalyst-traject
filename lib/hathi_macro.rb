@@ -4,7 +4,7 @@ module HathiMacro
 
   def connection
     @conn = open_connection!
-    @@isConnected == true
+    @isConnected == true
   end
 
   def hathi_access
@@ -76,7 +76,7 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
-      if defined?(@@isConnected) == false
+      if instance_variable_defined?(@isConnected) == false
         connection
       end
       local_id = local_id.to_s
