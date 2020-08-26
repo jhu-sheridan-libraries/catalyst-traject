@@ -77,6 +77,8 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
+      if !@conn.isConnected
+        connection
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
       stmt = @conn.createStatement()
