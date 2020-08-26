@@ -1,7 +1,7 @@
 module HathiMacro
   Marc21 = Traject::Macros::Marc21
   OCLC_CLEAN = /^\(OCoLC\)[^0-9A-Za-z]*([0-9A-Za-z]*)[^0-9A-Za-z]*$/
-  conn =  java.sql.DriverManager.getConnection( jdbc_url(true) )
+  @@test = "hi"
 
   def hathi_access
     lambda do |record, accumulator, _context|
@@ -71,6 +71,7 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
+      logger.info(@@test)
       conn = open_connection!
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
