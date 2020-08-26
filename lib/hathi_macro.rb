@@ -71,11 +71,15 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
-      logger.info(@@test)
-      conn = open_connection!
+      if @@test == "hi"
+        conn = open_connection!
+        stmt = conn.createStatement()
+        @@test = conn
+      else
+        stmt = @@test.createStatement()
+      end
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
-      stmt = conn.createStatement()
       rs = stmt.executeQuery(sql)
       # Search all returned records for highest level of access (allow)
       # If not found, return whatever else we got
