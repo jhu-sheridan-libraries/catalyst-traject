@@ -80,14 +80,14 @@ module HathiMacro
       # Search all returned records for highest level of access (allow)
       # If not found, return whatever else we got
       hathi_value = 'none'
-          while (rs.next)
-      #logger.info(rs.getString(type))
-      if type == 'access'
-        hathi_value = '[' + rs.getString(type) + ',' + rs.getString('rights') + ']'
-      else
-        hathi_value = rs.getString(type)
+      while (rs.next)
+        #logger.info(rs.getString(type))
+        if type == 'access'
+          hathi_value = '[' + rs.getString(type) + ',' + rs.getString('rights') + ']'
+        else
+          hathi_value = rs.getString(type)
+        end
       end
-    end
     #ensure
     #  conn.close
     end
