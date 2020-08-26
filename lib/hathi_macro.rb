@@ -75,7 +75,7 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
-      conn = open_connection!
+      #conn = open_connection!
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
       stmt = conn.createStatement()
@@ -87,8 +87,8 @@ module HathiMacro
         #logger.info(rs.getString(type))
         hathi_value = rs.getString(type)
       end
-    ensure
-      conn.close
+    #ensure
+    #  conn.close
     end
     return hathi_value
   end
