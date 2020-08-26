@@ -3,9 +3,8 @@ module HathiMacro
   OCLC_CLEAN = /^\(OCoLC\)[^0-9A-Za-z]*([0-9A-Za-z]*)[^0-9A-Za-z]*$/
 
   def connection
-    if !@conn.isConnected
-      @conn = open_connection!
-    end
+    @conn = open_connection!
+    @@isConnected == true
   end
 
   def hathi_access
@@ -77,7 +76,7 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
-      if !@conn.isConnected
+      if defined?(@@isConnected) == false
         connection
       end
       local_id = local_id.to_s
