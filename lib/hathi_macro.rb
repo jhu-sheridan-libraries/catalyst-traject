@@ -1,7 +1,7 @@
 module HathiMacro
   Marc21 = Traject::Macros::Marc21
   OCLC_CLEAN = /^\(OCoLC\)[^0-9A-Za-z]*([0-9A-Za-z]*)[^0-9A-Za-z]*$/
-  @conn = open_connection!
+  @conn = self.open_connection!
 
   def initialize
     logger.info('init ******************')
