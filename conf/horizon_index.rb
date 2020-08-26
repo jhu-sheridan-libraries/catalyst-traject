@@ -17,6 +17,8 @@ settings do
   # let's try 3 to see if it speeds things with for our parallel shelfbrowse indexing
   # going on. 
   provide "processing_thread_pool", 3
+  # open connection for hathi
+  @conn = open_connection!
 end
 
 
