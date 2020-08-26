@@ -1,10 +1,11 @@
 module HathiMacro
   Marc21 = Traject::Macros::Marc21
   OCLC_CLEAN = /^\(OCoLC\)[^0-9A-Za-z]*([0-9A-Za-z]*)[^0-9A-Za-z]*$/
-  conn = ""
+  @conn = ""
 
   def initialize
-    conn = open_connection!
+    logger.info('init ******************')
+    @conn = open_connection!
   end
 
   def hathi_access
@@ -78,7 +79,7 @@ module HathiMacro
       #conn = open_connection!
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
-      stmt = conn.createStatement()
+      stmt = @conn.createStatement()
       rs = stmt.executeQuery(sql)
       # Search all returned records for highest level of access (allow)
       # If not found, return whatever else we got
