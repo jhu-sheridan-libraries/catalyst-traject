@@ -1,8 +1,8 @@
 module HathiMacro
   Marc21 = Traject::Macros::Marc21
   OCLC_CLEAN = /^\(OCoLC\)[^0-9A-Za-z]*([0-9A-Za-z]*)[^0-9A-Za-z]*$/
-  conn = ""
-  isConnected = false
+  @conn = ""
+  @isConnected = false
 
   def hathi_access
     lambda do |record, accumulator, _context|
@@ -32,13 +32,13 @@ module HathiMacro
   def open_connection!
     #logger.debug("HorizonReader: Opening JDBC Connection at #{jdbc_url(false)} ...")
 
-    conn =  java.sql.DriverManager.getConnection( jdbc_url(true) )
+    @conn =  java.sql.DriverManager.getConnection( jdbc_url(true) )
     # If autocommit on, fetchSize later has no effect, and JDBC slurps
     # the whole result set into memory, which we can not handle.
-    conn.setAutoCommit false
+    @conn.setAutoCommit false
     isConnected = true
     #logger.debug("HorizonReader: Opened JDBC Connection.")
-    return conn
+    return @conn
   end
 
   # Looks up JDBC url from settings, either 'horizon.jdbc_url' if present,
@@ -73,8 +73,8 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
-      if isConnected == false
-        conn = open_connection!
+      if @isConnected == false
+        @conn = open_connection!
       end
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
