@@ -36,7 +36,7 @@ module HathiMacro
     # If autocommit on, fetchSize later has no effect, and JDBC slurps
     # the whole result set into memory, which we can not handle.
     conn.setAutoCommit false
-    isConnected = true
+    @@isConnected = true
     logger.debug("HorizonReader: Opened JDBC Connection.")
     return conn
   end
