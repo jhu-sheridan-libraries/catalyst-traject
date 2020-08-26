@@ -76,7 +76,7 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
-      if instance_variable_defined?(@isConnected) == false
+      if instance_variable_defined?(@isConnected).nil?
         connection
       end
       local_id = local_id.to_s
