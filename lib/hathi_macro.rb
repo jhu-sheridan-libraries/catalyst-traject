@@ -37,7 +37,7 @@ module HathiMacro
     # the whole result set into memory, which we can not handle.
     @conn.setAutoCommit false
     isConnected = true
-    #logger.debug("HorizonReader: Opened JDBC Connection.")
+    logger.debug("HorizonReader: Opened JDBC Connection.")
     return @conn
   end
 
@@ -78,7 +78,7 @@ module HathiMacro
       end
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
-      stmt = conn.createStatement()
+      stmt = @conn.createStatement()
       rs = stmt.executeQuery(sql)
       # Search all returned records for highest level of access (allow)
       # If not found, return whatever else we got
