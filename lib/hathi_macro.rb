@@ -1,8 +1,8 @@
 module HathiMacro
   Marc21 = Traject::Macros::Marc21
   OCLC_CLEAN = /^\(OCoLC\)[^0-9A-Za-z]*([0-9A-Za-z]*)[^0-9A-Za-z]*$/
-  @@conn = ""
-  @@isConnected = false
+  @conn = ""
+  @isConnected = false
 
   def hathi_access
     lambda do |record, accumulator, _context|
@@ -36,7 +36,7 @@ module HathiMacro
     # If autocommit on, fetchSize later has no effect, and JDBC slurps
     # the whole result set into memory, which we can not handle.
     conn.setAutoCommit false
-    @@isConnected = true
+    @isConnected = true
     logger.debug("HorizonReader: Opened JDBC Connection.")
     return conn
   end
@@ -73,13 +73,13 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
-      if @@isConnected == false
+      if @isConnected == false
         conn = open_connection!
-        @@conn = conn
+        @conn = conn
       end
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
-      stmt = @@con.createStatement()
+      stmt = @con.createStatement()
       rs = stmt.executeQuery(sql)
       # Search all returned records for highest level of access (allow)
       # If not found, return whatever else we got
