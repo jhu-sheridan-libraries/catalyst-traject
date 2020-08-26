@@ -1,8 +1,12 @@
 module HathiMacro
   Marc21 = Traject::Macros::Marc21
   OCLC_CLEAN = /^\(OCoLC\)[^0-9A-Za-z]*([0-9A-Za-z]*)[^0-9A-Za-z]*$/
-  @conn = ""
-  @isConnected = false
+
+  def connection
+    if !@conn.isConnected
+      @conn = open_connection!
+    end
+  end
 
   def hathi_access
     lambda do |record, accumulator, _context|
@@ -73,10 +77,6 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
-      if @isConnected == false
-        conn = open_connection!
-        @conn = conn
-      end
       local_id = local_id.to_s
       sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
       stmt = @conn.createStatement()
