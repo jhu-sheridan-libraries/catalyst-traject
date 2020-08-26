@@ -92,8 +92,8 @@ module HathiMacro
           hathi_value = rs.getString(type)
         end
       end
-    ensure
-      conn.close
+    #ensure
+    #  conn.close
     end
     return hathi_value
   end
