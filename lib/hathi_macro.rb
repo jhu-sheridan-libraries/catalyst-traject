@@ -71,25 +71,26 @@ module HathiMacro
 
 
   def lookup_hathi(local_id, type)
-    #begin
-    #conn = open_connection!
-    local_id = local_id.to_s
-    sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
-    stmt = conn.createStatement()
-    rs = stmt.executeQuery(sql)
-    # Search all returned records for highest level of access (allow)
-    # If not found, return whatever else we got
-    hathi_value = 'none'
-    while (rs.next)
+    begin
+      #conn = open_connection!
+      local_id = local_id.to_s
+      sql = "select * from jhu_hathi_exception where bib# = #{local_id}"
+      stmt = conn.createStatement()
+      rs = stmt.executeQuery(sql)
+      # Search all returned records for highest level of access (allow)
+      # If not found, return whatever else we got
+      hathi_value = 'none'
+          while (rs.next)
       #logger.info(rs.getString(type))
       if type == 'access'
-        hathi_value = '[' + rs.getString(type) + ',' + rs.getString('access') + ']'
+        hathi_value = '[' + rs.getString(type) + ',' + rs.getString('rights') + ']'
       else
         hathi_value = rs.getString(type)
+      end
     end
     #ensure
     #  conn.close
-    #end
+    end
     return hathi_value
   end
 end
