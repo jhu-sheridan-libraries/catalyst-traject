@@ -1,7 +1,7 @@
 module HathiMacro
   Marc21 = Traject::Macros::Marc21
   OCLC_CLEAN = /^\(OCoLC\)[^0-9A-Za-z]*([0-9A-Za-z]*)[^0-9A-Za-z]*$/
-  @@test = "hi"
+  @@test = "init"
 
   def hathi_access
     lambda do |record, accumulator, _context|
@@ -71,7 +71,7 @@ module HathiMacro
 
   def lookup_hathi(local_id, type)
     begin
-      if @@test == "hi"
+      if @@test == "init"
         conn = open_connection!
         stmt = conn.createStatement()
         @@test = conn
