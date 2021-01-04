@@ -15,7 +15,7 @@ extend HathiMacro
 settings do
   # 3 cpu's on catsolrmaster, normally would default to 2 procesing threads,
   # let's try 3 to see if it speeds things with for our parallel shelfbrowse indexing
-  # going on. 
+  # going on.
   provide "processing_thread_pool", 3
 end
 
@@ -36,7 +36,7 @@ to_field "publisher_t",           extract_marc("260abef:261abef:262ab:264ab")
 to_field "language_facet",        marc_languages
 
 to_field "format"                 do |record, accumulator|
-  # PIG wants no 'Other' category for unclassified elements, so we :default => nil. 
+  # PIG wants no 'Other' category for unclassified elements, so we :default => nil.
   accumulator.concat Traject::Macros::MarcFormatClassifier.new(record).formats( :default => nil  )
 end
 
@@ -44,9 +44,9 @@ end
 # https://github.com/billdueber/traject_umich_format
 #
 # Note that PIG wants just eg "CD" instead of "Audio CD", even
-# though the logic used from umich really is trying to target only Audio CDs. 
-# 19 March 2013. 
-# We'll see if that causes confusion and needs to be changed one way or another. 
+# though the logic used from umich really is trying to target only Audio CDs.
+# 19 March 2013.
+# We'll see if that causes confusion and needs to be changed one way or another.
 require 'traject/umich_format'
 umich_format_map = Traject::TranslationMap.new('umich/format').merge(
   "RC" => "CD",
@@ -96,8 +96,8 @@ end
 to_field "title_exactmatch" do |record, accumulator|
   field = record["245"]
   if field
-    # Straight 245$a is used -- or if no $a, then first 245$k. 
-    base_title        = field['a'] || field['k']    
+    # Straight 245$a is used -- or if no $a, then first 245$k.
+    base_title        = field['a'] || field['k']
     accumulator << base_title if base_title
 
     # Also, add that base_title with non-filing chars skipped
@@ -131,7 +131,7 @@ to_field "author_sort",         marc_sortable_author
 
 
 #to_field "author_facet",        extract_marc("100abcdq:110abcdgnu:111acdenqu:700abcdq:710abcdgnu:711acdenqu", :trim_punctuation => true)
-# Split author into author and organization, per PIG decision march 2014. PROBLEMS, working on it. 
+# Split author into author and organization, per PIG decision march 2014. PROBLEMS, working on it.
 to_field "author_facet",        extract_marc("100abcdq:700abcdq", :trim_punctuation => true)
 to_field "organization_facet",  extract_marc("110abcdgnu:111acdenqu:710abcdgnu:711acdenqu", :trim_punctuation => true)
 
@@ -152,7 +152,7 @@ to_field "subject_topic_facet"  do |record, accumulator|
     end
   end
 
-  # No default wanted by PI. 
+  # No default wanted by PI.
   #accumulator << "Unspecified" if accumulator.empty?
 end
 
@@ -160,7 +160,7 @@ to_field "subject_geo_facet",   marc_geo_facet
 to_field "subject_era_facet",   marc_era_facet
 
 # not doing this at present, this wouldn't be quite right, need custom
-# logic for where to insert '--', not just between any subfield. 
+# logic for where to insert '--', not just between any subfield.
 #to_field "subject_facet",     extract_marc("600:610:611:630:650:651:655:690", :seperator => "--")
 
 to_field "published_display", extract_marc("260a", :trim_punctuation => true)
@@ -169,7 +169,7 @@ to_field "pub_date",          marc_publication_date
 # LCC to broad class, start with built-in from marc record, but then do our own for local
 # call numbers.
 #
-# Discpline facet requested ELIMINATED by PIG, March 2014. 
+# Discpline facet requested ELIMINATED by PIG, March 2014.
 # lcc_map             = Traject::TranslationMap.new("lcc_top_level")
 # to_field "discipline_facet",  marc_lcc_to_broad_category(:default => nil) do |record, accumulator|
 #   # add in our local call numbers
@@ -252,24 +252,11 @@ to_field "location_facet" do |record, accumulator|
   accumulator.concat Traject::TranslationMap.new("jh_locations").translate_array(location_codes)
   accumulator.concat Traject::TranslationMap.new("jh_collections").translate_array(collection_codes)
 
-  # Map to empty string to mean 'no facet posting', make it so. 
+  # Map to empty string to mean 'no facet posting', make it so.
   accumulator.delete_if {|a| a.nil? || a.empty?}
 
   accumulator.uniq!
 
   # PI wants no 'Unknown' https://wiki.library.jhu.edu/display/HILT/March+4+2014+Agenda
   #accumulator << "Unknown" if accumulator.empty?
-end
-
-# Okay, anything that's been classified as format "Online", we want to index as in
-# EVERY location facet, per request of PIG March 2014.
-all_location_values = (Traject::TranslationMap.new("jh_locations").to_hash.values.flatten + 
-  Traject::TranslationMap.new("jh_collections").to_hash.values.flatten).uniq
-all_location_values.delete_if {|a| a.nil? || a.empty?}
-each_record do |record, context|
-  if (context.output_hash["format"] || []).include? "Online"
-      context.output_hash["location_facet"] ||= []
-      context.output_hash["location_facet"].concat all_location_values
-      context.output_hash["location_facet"].uniq!
-  end
 end
