@@ -27,7 +27,7 @@ GEM
     scrub_rb (1.0.1)
     sequel (4.49.0)
     slop (3.6.0)
-    traject (2.3.4)
+    traject (2.3.4-java)
       concurrent-ruby (>= 0.8.0)
       dot-properties (>= 0.1.1)
       hashie (~> 3.1)
@@ -35,6 +35,7 @@ GEM
       marc (~> 1.0)
       marc-fastxmlwriter (~> 1.0)
       slop (>= 3.4.5, < 4.0)
+      traject-marc4j_reader (~> 1.0)
       yell
     traject-marc4j_reader (1.0.2-java)
       marc (~> 1.0)
@@ -52,6 +53,7 @@ GEM
 
 PLATFORMS
   java
+  universal-java-1.8
 
 DEPENDENCIES
   concurrent-ruby (~> 1.0)
@@ -68,4 +70,4 @@ DEPENDENCIES
   traject_umich_format (~> 0.4)
 
 BUNDLED WITH
-   1.16.1
+   2.2.11
