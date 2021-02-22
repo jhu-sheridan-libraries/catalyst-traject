@@ -260,16 +260,3 @@ to_field "location_facet" do |record, accumulator|
   # PI wants no 'Unknown' https://wiki.library.jhu.edu/display/HILT/March+4+2014+Agenda
   #accumulator << "Unknown" if accumulator.empty?
 end
-
-# Okay, anything that's been classified as format "Online", we want to index as in
-# EVERY location facet, per request of PIG March 2014.
-all_location_values = (Traject::TranslationMap.new("jh_locations").to_hash.values.flatten + 
-  Traject::TranslationMap.new("jh_collections").to_hash.values.flatten).uniq
-all_location_values.delete_if {|a| a.nil? || a.empty?}
-each_record do |record, context|
-  if (context.output_hash["format"] || []).include? "Online"
-      context.output_hash["location_facet"] ||= []
-      context.output_hash["location_facet"].concat all_location_values
-      context.output_hash["location_facet"].uniq!
-  end
-end
