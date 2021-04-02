@@ -260,3 +260,20 @@ to_field "location_facet" do |record, accumulator|
   # PI wants no 'Unknown' https://wiki.library.jhu.edu/display/HILT/March+4+2014+Agenda
   #accumulator << "Unknown" if accumulator.empty?
 end
+
+each_record do |record, context|
+  if (context.output_hash["hathi_access"].include?("pd_pvt") || context.output_hash["hathi_access"].include?("nobody"))
+    next
+  end
+  if (context.output_hash["format"] || []).include? "Online"
+    context.output_hash["access_facet"] ||= []
+    context.output_hash["access_facet"]  << "Online" if context.output_hash["access_facet"].empty?
+  elsif((context.output_hash["hathi_url"] || []).any? && !((context.output_hash["hathi_url"] || []).include? "none"))
+    context.output_hash["access_facet"] ||= []
+    context.output_hash["access_facet"]  << "Online" if context.output_hash["access_facet"].empty?
+    context.output_hash["format"]  << "Online"
+  else
+    context.output_hash["access_facet"] ||= []
+    context.output_hash["access_facet"] << "At the Library" if context.output_hash["access_facet"].empty?
+  end
+end
