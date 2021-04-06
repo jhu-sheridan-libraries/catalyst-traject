@@ -262,7 +262,7 @@ to_field "location_facet" do |record, accumulator|
 end
 
 each_record do |record, context|
-  if (context.output_hash["hathi_access"].include?("pd_pvt") || context.output_hash["hathi_access"].include?("nobody"))
+  if (context.output_hash["hathi_access"] == "[deny,nobody]" || context.output_hash["hathi_access"] == "[deny,pd_pvt]")
     # Do nothing
   elsif (context.output_hash["format"] || []).include? "Online"
     context.output_hash["access_facet"] ||= []
