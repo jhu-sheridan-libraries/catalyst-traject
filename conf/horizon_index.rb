@@ -274,8 +274,4 @@ each_record do |record, context|
     context.output_hash["access_facet"] ||= []
     context.output_hash["access_facet"] << "At the Libraries" if context.output_hash["access_facet"].empty?
   end
-  # remove 'Online' from format facet because we have now added it to the access facet
-  if (context.output_hash["format"] || []).include? "Online"
-    context.output_hash["format"] = context.output_hash["format"].reject { |f| f == 'Online' }
-  end
 end
