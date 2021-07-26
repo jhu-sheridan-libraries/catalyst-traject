@@ -6,11 +6,15 @@ extend Traject::Macros::MarcFormats
 
 # add our ../lib to LOAD_PATH, including ../lib/translation_maps
 $LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '../lib/hathi_macro.rb'))
+$LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '../lib/acquired_sort_macro.rb'))
 $LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '../lib'))
 
 # Local code to lookup Hathi access status
 require 'hathi_macro.rb'
 extend HathiMacro
+
+require 'acquired_sort_macro.rb'
+extend AcquiredSortMacro
 
 settings do
   # 3 cpu's on catsolrmaster, normally would default to 2 procesing threads,
@@ -240,6 +244,8 @@ to_field "oclcnum_t",           oclcnum
 # - lookup by bib id and OCLC number
 to_field 'hathi_access', hathi_access
 to_field 'hathi_url', hathi_url
+
+to_field 'acquired_date', acquired_date
 
 to_field "other_number_unstem", extract_marc("024a:028a")
 
