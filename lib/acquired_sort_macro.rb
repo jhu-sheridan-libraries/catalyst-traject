@@ -66,11 +66,11 @@ module AcquiredSortMacro
         stmt = @@test.createStatement()
       end
       local_id = local_id.to_s
-      sql = "select top 1 dateadd(DAY , creation_date, '1970-01-01') AS acquired_date from item where bib# = #{local_id} order by creation_date desc"
+      sql = "select top 1 convert(CHAR(20), dateadd(DAY, creation_date, '1970-01-01'), 23) AS acquired_date from item where bib# = #{local_id} order by creation_date desc"
       rs = stmt.executeQuery(sql)
       date = nil
       while (rs.next)
-        date = rs.getString('acquired_date')
+        date = rs.getString('acquired_date')+'Z'
       end
       #ensure
       #  conn.close
