@@ -70,7 +70,7 @@ module AcquiredSortMacro
       rs = stmt.executeQuery(sql)
       date = nil
       while (rs.next)
-        date = rs.getString('creation_date')
+        date = rs.getString('acquired_date')
       end
       #ensure
       #  conn.close
