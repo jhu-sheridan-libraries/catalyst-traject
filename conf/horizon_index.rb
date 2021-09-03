@@ -160,22 +160,7 @@ to_field "subject_topic_facet"  do |record, accumulator|
   #accumulator << "Unspecified" if accumulator.empty?
 end
 
-to_field "subject_first_topic_facet"  do |record, accumulator|
-  # some where we need to seperate subfields, some where we need to keep them together
-  accumulator.concat  MarcExtractor.cached("650aa").extract(record)
-
-  # trim
-  accumulator.collect! {|v| Traject::Macros::Marc21.trim_punctuation v}
-
-  #upcase first letter if needed, in MeSH sometimes inconsistently downcased
-  accumulator.collect! do |value|
-    value.gsub(/\A[a-z]/) do |m|
-      m.upcase
-    end
-  end
-
-  accumulator.first
-end
+to_field "subject_first_topic_facet", extract_marc("650aa", :trim_punctuation => true, :first => true)
 
 to_field "subject_geo_facet",   marc_geo_facet
 to_field "subject_era_facet",   marc_era_facet
