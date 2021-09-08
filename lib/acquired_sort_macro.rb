@@ -77,11 +77,11 @@ module AcquiredSortMacro
       rs = stmt.executeQuery(sql)
       date = nil
       while (rs.next)
-        available_date = rs.getString('available_date').rstrip
+        available_date = rs.getString('available_date')
         if available_date.nil?
           date = rs.getString('acquired_date').rstrip
         else
-          date = available_date
+          date = available_date.rstrip
         end
       end
       #ensure
