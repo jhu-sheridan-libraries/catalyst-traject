@@ -66,11 +66,23 @@ module AcquiredSortMacro
         stmt = @@test.createStatement()
       end
       local_id = local_id.to_s
-      sql = "select top 1 creation_date AS acquired_date from item where bib# = #{local_id} order by creation_date desc"
+      sql = "SELECT TOP 1
+                n.new_date AS available_date,
+                i.creation_date AS acquired_date
+              FROM new_item n
+               RIGHT OUTER JOIN item i
+                 ON n.item# = i.item#
+              WHERE i.bib# = #{local_id}
+              ORDER BY acquired_date DESC"
       rs = stmt.executeQuery(sql)
       date = nil
       while (rs.next)
-        date = rs.getString('acquired_date').rstrip
+        available_date = rs.getString('available_date').rstrip
+        if available_date.nil?
+          date = rs.getString('acquired_date').rstrip
+        else
+          date = available_date
+        end
       end
       #ensure
       #  conn.close
