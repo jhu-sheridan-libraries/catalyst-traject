@@ -38,7 +38,7 @@ database_yml_path = File.expand_path("../../config/database.yml", __FILE__)
 all_db_config       = YAML.load(ERB.new(File.read(database_yml_path)).result)
 
 db_conf             = all_db_config[  ENV['FROM_ENV'] || ENV['RAILS_ENV'] || "development"   ]
-sequel_db           = Sequel.connect("jdbc:mysql://#{db_conf['host']}:#{db_conf['port']}/#{db_conf['database']}?characterEncoding=utf8&user=#{db_conf['username']}&password=#{db_conf['password']}",
+sequel_db           = Sequel.connect("jdbc:mysql://#{db_conf['host']}:#{db_conf['port']}/#{db_conf['database']}?characterEncoding=utf8&user=#{db_conf['username']}&password=#{db_conf['password']}&serverTimezone=EST",
   # Not sure why we're getting pool timeouts, try increasing from 5 seconds to 10
   # and increasing connections
     :pool_timeout => 10,
