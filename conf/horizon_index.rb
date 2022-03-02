@@ -14,6 +14,8 @@ $LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), '../lib'))
 require 'hathi_macro.rb'
 extend HathiMacro
 
+SUBJECT_OVERRIDE_MAP = Traject::TranslationMap.new('subject_override', default: PASSTHROUGH)
+
 settings do
   # 3 cpu's on catsolrmaster, normally would default to 2 procesing threads,
   # let's try 3 to see if it speeds things with for our parallel shelfbrowse indexing
@@ -30,7 +32,7 @@ end
 
 to_field "source",              literal("horizon")
 
-to_field "marc_display",        serialized_marc(:format => "binary", :binary_escape => false, :allow_oversized => true)
+to_field "marc_display",        serialized_marc(:format => "binary", :binary_escape => false, :allow_oversized => true, translation_map: SUBJECT_OVERRIDE_MAP)
 
 to_field "text",                  extract_all_marc_values
 to_field "text_extra_boost_t",    extract_marc("505art")
@@ -137,10 +139,9 @@ to_field "author_sort",         marc_sortable_author
 to_field "author_facet",        extract_marc("100abcdq:700abcdq", :trim_punctuation => true)
 to_field "organization_facet",  extract_marc("110abcdgnu:111acdenqu:710abcdgnu:711acdenqu", :trim_punctuation => true)
 
-subject_override_map = Traject::TranslationMap.new('subject_override', default: PASSTHROUGH)
 
 to_field "subject_t",           extract_marc("600:610:611:630:650:651avxyz:653aa:654abcvyz:655abcvxyz:690abcdxyz:691abxyz:692abxyz:693abxyz:656akvxyz:657avxyz:652axyz:658abcd",
-  translation_map: subject_override_map)
+  translation_map: SUBJECT_OVERRIDE_MAP)
 
 
 to_field "subject_topic_facet"  do |record, accumulator|
