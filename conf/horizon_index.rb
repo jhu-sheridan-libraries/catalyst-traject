@@ -139,8 +139,7 @@ to_field "organization_facet",  extract_marc("110abcdgnu:111acdenqu:710abcdgnu:7
 
 subject_override_map = Traject::TranslationMap.new('subject_override', default: PASSTHROUGH)
 
-to_field "subject_t",           extract_marc("600:610:611:630:650:651avxyz:653aa:654abcvyz:655abcvxyz:690abcdxyz:691abxyz:692abxyz:693abxyz:656akvxyz:657avxyz:652axyz:658abcd",
-  translation_map: subject_override_map)
+to_field "subject_t",           extract_marc("600:610:611:630:650:651avxyz:653aa:654abcvyz:655abcvxyz:690abcdxyz:691abxyz:692abxyz:693abxyz:656akvxyz:657avxyz:652axyz:658abcd")
 
 
 to_field "subject_topic_facet"  do |record, accumulator|
