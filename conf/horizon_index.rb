@@ -1,3 +1,5 @@
+PASSTHROUGH = "__passthrough__".freeze
+
 require 'traject/macros/marc21_semantics'
 extend  Traject::Macros::Marc21Semantics
 
@@ -135,12 +137,25 @@ to_field "author_sort",         marc_sortable_author
 to_field "author_facet",        extract_marc("100abcdq:700abcdq", :trim_punctuation => true)
 to_field "organization_facet",  extract_marc("110abcdgnu:111acdenqu:710abcdgnu:711acdenqu", :trim_punctuation => true)
 
+subject_override_map = Traject::TranslationMap.new('subject_override', default: PASSTHROUGH)
 
-to_field "subject_t",           extract_marc("600:610:611:630:650:651avxyz:653aa:654abcvyz:655abcvxyz:690abcdxyz:691abxyz:692abxyz:693abxyz:656akvxyz:657avxyz:652axyz:658abcd")
+
+# Untranslated subjects 
+to_field "subject_t", extract_marc("600:610:611:630:650:651avxyz:653aa:654abcvyz:655abcvxyz:690abcdxyz:691abxyz:692abxyz:693abxyz:656akvxyz:657avxyz:652axyz:658abcd")
+
+# Translated subjects
+
+translated_subjects = extract_marc("600:610:611:630:650:651avxyz:653aa:654abcvyz:655abcvxyz:690abcdxyz:691abxyz:692abxyz:693abxyz:656akvxyz:657avxyz:652axyz:658abcd", translation_map: subject_override_map) 
+
+to_field "subject_translated_t", translated_subjects
+to_field "subject_translated_unstem", translated_subjects
+
 to_field "subject_topic_facet"  do |record, accumulator|
   # some where we need to seperate subfields, some where we need to keep them together
-  accumulator.concat  MarcExtractor.cached("610x:611x:630x:648a:648x:650x:651a:651x:691a:691x:690a:690x", :separator => nil).extract(record)
-  accumulator.concat  MarcExtractor.cached("600abcdtq:610abt:611abt:630aa:650aa:653aa:654ab:656aa").extract(record)
+  no_seperator_subfields = accumulator.concat  subject_override_map
+    .translate_array(MarcExtractor.cached("610x:611x:630x:648a:648x:650x:651a:651x:691a:691x:690a:690x").extract(record))
+  seperator_subfields = accumulator.concat  subject_override_map
+    .translate_array(MarcExtractor.cached("600abcdtq:610abt:611abt:630aa:650aa:653aa:654ab:656aa").extract(record))
 
   # trim
   accumulator.collect! {|v| Traject::Macros::Marc21.trim_punctuation v}
